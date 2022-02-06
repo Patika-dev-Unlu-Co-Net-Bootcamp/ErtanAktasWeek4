@@ -1,4 +1,5 @@
 ﻿using hafta1WebApi.DBOperations;
+using hafta1WebApi.Filters;
 using hafta1WebApi.UserOperation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,7 @@ namespace hafta1WebApi.Controllers
         }
         [Authorize]
         [HttpGet]
+        [CustomActionFilter]
         public ActionResult<List<User>> Get()
         {
             var users = _context.Users.OrderBy(x => x.Id).ToList();

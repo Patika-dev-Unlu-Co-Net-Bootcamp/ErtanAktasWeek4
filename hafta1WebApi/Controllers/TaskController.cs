@@ -1,4 +1,5 @@
 ﻿using hafta1WebApi.DBOperations;
+using hafta1WebApi.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,6 +21,7 @@ namespace hafta1WebApi.Controllers
         }
 
         [HttpGet] // Tarihe göre Sıralama yaparak Getirir. Önce En yakın tarihli olan 
+        [CustomActionFilter]
         public ActionResult<List<Tasklar>> Get()
         {
             var tasks = _context.Tasks.OrderBy(t => t.Date).ToList();
@@ -39,6 +41,7 @@ namespace hafta1WebApi.Controllers
                 return Ok(task); }
         }
         [HttpGet("search")] //filtreleme 
+        [CustomActionFilter]
         public ActionResult<List<Tasklar>> GetByFilter([FromQuery] string search)
         {
             var task = _context.Tasks.Where(x => x.Title.ToLower().Contains(search.ToLower())).ToList();
